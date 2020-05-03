@@ -44,7 +44,26 @@ func foo (){
     fmt.Println(i8)
 
 }
+
+func isCornFlakes(arg string)string{
+    if arg =="コーンフレーク" {
+        return "コーンフレークやないかい"
+    }
+    return "ほなコーンフレークとちゃうか〜"
+}
+// 構造体
+type Person struct {
+    name string
+    age int
+}
+func(ele Person)intro(arg string) string{
+    return arg + "I am " + ele.name
+}
+
 func main() {
+    bob := Person{"Bob",80}
+    fmt.Println(isCornFlakes("not cornflakes"))
+    fmt.Println(bob.intro("Hello!!!!"))
     // foo()
     //x := 0+3
     fmt.Println(string("Hello world"[0])) // H
@@ -52,6 +71,48 @@ func main() {
     fmt.Println(Pi,Username,Password)
     fmt.Println("Hello, World!", time.Now())
     fmt.Println(user.Current())
+
+    // 連想配列の作成
+    var map_ex = map[int]string{
+        1:"Golang",
+        2:"Ruby",
+    }
+    fmt.Println(map_ex)
+
+    map_ex[3] = "Javascript"
+    fmt.Println(map_ex)
+
+    delete(map_ex, 3)
+    fmt.Println(map_ex)
+
+    slice1 := []string{"Golang", "Ruby"}
+    map1 := map[string]string{"Lang1":"Golang", "Lang2":"Ruby"}
+
+    // forのrange節
+
+    //ex1:スライスやマップに使用すると反復毎に2つの変数を返す。
+    //ex2:スライスの場合、1つ目の変数は `インデックス(index)`で、`2つ目は要素(value)`である。
+    for index, value := range slice1{
+        fmt.Println(index,value)
+        //=> 0 Golang
+        //=> 1 Ruby
+    }
+
+    //ex3:マップの場合、1つ目の変数は`キー(key)`で、２つ目の変数は`バリュー(value)`である。
+    for key, value := range map1{
+        fmt.Println(key, value)
+        //=> Lang1 Golang
+        //=> Lang2 Ruby
+    }
+
+    //ex4:インデックスや値は、 _ へ代入することで省略することが可能。
+
+    for _,value := range map1{
+        fmt.Println(value)
+        //=> Golang
+        //=> Ruby
+    }
+    
     // 型変換
     // var x int = 1
     // xx := float64(x)
@@ -101,5 +162,6 @@ func main() {
         fmt.Println(c)
     }
     fmt.Println(c)
+
 
 }
