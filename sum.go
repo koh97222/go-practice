@@ -17,3 +17,23 @@ func Sum(numbers []int) int {
 
 	return sum
 }
+
+// SumAll SumAll
+func SumAll(numbersToSum ...[]int) []int {
+
+	// lengthOfNumbers := len(numbersToSum)
+
+	// make sliceの作成
+	// sums := make([]int, lengthOfNumbers)
+
+	var sums []int
+	for _, numbers := range numbersToSum {
+		// sums[i] = Sum(numbers)
+
+		// ★append関数
+		// sliceと新しい値を受け取り、その中にあるすべての項目を含む、新しいsliceを返す
+		sums = append(sums, Sum(numbers))
+	}
+
+	return sums
+}
