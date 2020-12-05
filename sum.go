@@ -37,3 +37,24 @@ func SumAll(numbersToSum ...[]int) []int {
 
 	return sums
 }
+
+// SumAllTails SumAllTails
+// slice[low:high] でスライスを切り取りできる。
+func SumAllTails(numbersToSum ...[]int) []int {
+
+	var sums []int
+	for _, numbers := range numbersToSum {
+		if len(numbers) == 0 {
+			sums = append(sums, 0)
+		} else {
+			// 1からすべて取る
+			tail := numbers[1:]
+			// ★append関数
+			// sliceと新しい値を受け取り、その中にあるすべての項目を含む、新しいsliceを返す
+			sums = append(sums, Sum(tail))
+		}
+		// sums[i] = Sum(numbers)
+	}
+
+	return sums
+}
