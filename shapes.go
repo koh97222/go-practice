@@ -13,6 +13,13 @@ type Circle struct {
 	radius float64
 }
 
+// Shape 図形のインターフェース
+// インターフェースを宣言することにより、
+// ヘルパーは具象型から切り離（Decoupling）され、その機能を実行するために必要なメソッドのみを持ちます。
+type Shape interface {
+	Area() float64
+}
+
 // Area 四角形の面積
 func (r Rectangle) Area() float64 {
 	return r.width * r.height
