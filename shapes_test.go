@@ -31,23 +31,28 @@ func TestArea(t *testing.T) {
 
 	t.Run("circle", func(t *testing.T) {
 		circle := Circle{10}
-		checkArea(t, circle, 100.0)
+		checkArea(t, circle, 314.1592653589793)
 	})
 
 	// テーブル駆動テスト
+	// テーブル駆動テストは、同じ方法でテストできるテストケースのリストを作成する場合に役立ちます。
 	// []struct 構造体のスライス
 	areaTest := []struct {
-		shape Shape
-		want  float64
+		name    string
+		shape   Shape
+		hasArea float64
 	}{
-		{Rectangle{12, 6}, 72.0},
-		{Circle{10}, 314.1592653589793},
+		{name: "Rectangle", shape: Rectangle{12, 6}, hasArea: 72.0},
+		{name: "Circle", shape: Circle{10}, hasArea: 314.1592653589793},
+		{name: "Triangle", shape: Triangle{12, 6}, hasArea: 36.0},
 	}
 	for _, tt := range areaTest {
-		got := tt.shape.Area()
-		if got != tt.want {
-			t.Errorf("got %g but got %g", got, tt.want)
-		}
-	}
 
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.shape.Area()
+			if got != tt.hasArea {
+				t.Errorf("got %g but got %g", got, tt.hasArea)
+			}
+		})
+	}
 }
