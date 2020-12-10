@@ -1,22 +1,35 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestWallet(t *testing.T) {
 
-	wallet := Wallet{}
+	assertBalance := func(t *testing.T, wallet Wallet, want BitCoin) {
 
-	wallet.Deposit(BitCoin(10))
+		t.Helper()
+		got := wallet.Balance()
 
-	got := wallet.Balance()
-	want := BitCoin(10)
-
-	fmt.Printf("address of balance in test is %v \n", &wallet.balance)
-
-	if got != want {
-		t.Errorf("got %d want %d", got, want)
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
 	}
+
+	t.Run("Deposit", func(t *testing.T) {
+
+		wallet := Wallet{}
+		wallet.Deposit(BitCoin(10))
+
+		assertBalance(t, wallet, BitCoin(10))
+	})
+
+	t.Run("Withdraw", func(t *testing.T) {
+
+		wallet := Wallet{balance: BitCoin(20)}
+		wallet.Withdraw(BitCoin(10))
+
+		assertBalance(t, wallet, BitCoin(10))
+	})
+
 }
