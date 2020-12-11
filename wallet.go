@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // BitCoin BitCoin
 type BitCoin int
@@ -14,6 +17,9 @@ type Wallet struct {
 type Stringer interface {
 	String() string
 }
+
+// ErrInsufficientFunds error message when withdraw over balance.
+var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
 
 // Deposit デポジット
 func (w *Wallet) Deposit(amount BitCoin) {
@@ -31,6 +37,12 @@ func (b BitCoin) String() string {
 }
 
 // Withdraw Withdraw
-func (w *Wallet) Withdraw(amount BitCoin) {
+func (w *Wallet) Withdraw(amount BitCoin) error {
+
+	if amount > w.balance {
+		return ErrInsufficientFunds
+	}
+
 	w.balance -= amount
+	return nil
 }
