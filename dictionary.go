@@ -10,8 +10,9 @@ type DictionaryErr string
 
 // ErrNotFound dictionaryのkeyが見つからず、正常にvalueを取れなかったとき。
 var (
-	ErrNotFound  = errors.New("could not find the word you were looking for")
-	ErrWordExist = errors.New("cannot add word because it already exists")
+	ErrNotFound         = errors.New("could not find the word you were looking for")
+	ErrWordExist        = errors.New("cannot add word because it already exists")
+	ErrWordDoesNotExist = errors.New("cannot update word because it does not exists")
 )
 
 func (e DictionaryErr) Error() string {
@@ -46,4 +47,28 @@ func (d Dictionary) Add(word, definition string) error {
 	}
 
 	return nil
+}
+
+// Update 辞書のwordを更新します。
+func (d Dictionary) Update(word, newDifinition string) error {
+
+	_, err := d.Search(word)
+
+	switch err {
+	case ErrNotFound:
+		return ErrWordDoesNotExist
+	case nil:
+		d[word] = newDifinition
+	default:
+		return err
+	}
+
+	return err
+}
+
+// Delete 辞書のwordを削除します。
+func (d Dictionary) Delete(word string) {
+	// mapで機能する組み込み関数
+	// 第一引数：map 第二引数：key
+	delete(d, word)
 }
